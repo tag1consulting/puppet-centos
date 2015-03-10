@@ -1,0 +1,69 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# You can override or add to this file by configuring the Vagrantfile.local
+# Note the provided Vagrantfile.local.example
+
+dirname = File.dirname(__FILE__)
+localfile = dirname + "/Vagrantfile.local"
+if File.exist?(localfile)
+  load localfile
+end
+
+Vagrant.configure('2') do |config|
+
+  # For Rackspace, we use a dummy box since we pull in a Rackspace image.
+  # For local work in Virtualbox, we should use a CentOS 6.5 box (puppetlabs provided box is fine).
+  config.vm.box     = 'dummy'
+  config.vm.box_url = 'https://github.com/mitchellh/vagrant-rackspace/raw/master/dummy.box'
+
+  # Private ssh key path (should be set in Vagrantfile.local)
+  config.ssh.private_key_path = $ssh_private_key_path
+
+  # Work around default CentOS sudo settings.
+  config.ssh.pty = true
+
+  config.vm.provider :rackspace do |rs|
+    # These are all set in Vagrantfile.local
+    rs.username = $rackspace_user
+    rs.api_key = $rackspace_api_key
+    rs.rackspace_region = $rackspace_region
+    rs.flavor = $rackspace_flavor
+    rs.image = $rackspace_image
+    rs.key_name = $rackspace_key_name
+    rs.server_name = $rackspace_server_name
+  end
+
+  # Configure the domain
+  if !defined? $domainname
+    $domainname = "tag1consulting.com"
+  end
+
+  # Configure the hostname
+  if !defined? $hostname
+    $hostname = "vagrant-test"
+  end
+  $fqdn = "#{$hostname}.#{$domainname}"
+  config.vm.hostname = $fqdn
+
+
+  # Install r10k using the shell provisioner and download the Puppet modules
+  config.vm.provision :shell, :path => 'bootstrap.sh'
+
+  # Puppet provisioner for primary configuration
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = "manifests"
+    puppet.module_path = [ "modules", "site", "dist" ]
+    puppet.manifest_file  = "site.pp"
+    puppet.hiera_config_path = "hiera/hiera.yaml"
+    puppet.working_directory = "/vagrant"
+    puppet.options = "--verbose"
+
+    # In vagrant environment it can be hard for facter to get this stuff right
+    puppet.facter = {
+      "fqdn" => $fqdn,
+      "hostname" => $fqdn,
+    }
+
+  end
+end

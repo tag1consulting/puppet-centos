@@ -1,0 +1,198 @@
+# Common default settings - only used if there isn't a more-specific Hiera setting found for a host.
+
+---
+#############################################
+# Class definitions.
+classes:
+ - site_profile::base
+ - site_profile::db
+ - site_profile::web
+
+#############################################
+# Global enable/disable flags.
+enable_yum_cron: FALSE
+allow_virtual_packages: TRUE
+
+##################################################
+## Firewall Rules.
+site_profile::base::firewall_rules:
+  '010 allow ssh access':
+    port: [22]
+site_profile::web::firewall_rules:
+  '100 allow http and https access':
+    port: [80, 443]
+
+#############################################
+## User configuration
+# Passwords must NOT be stored here. They go into the private hiera repo (JSON backend).
+# Generate passwords on CentOS for the password hash with:
+#   echo 'import crypt,getpass; print crypt.crypt(getpass.getpass(), "$6$16_CHARACTER_SALT_HERE")' | python
+# Replace "16_CHARACTER_SALT_HERE" with a salt you've generated (e.g. via 'pwgen -s 16 1')
+#
+# Account UIDs:
+# System accounts, start at 3100
+# User accounts, start at 3200
+# Accounts limited to certain systems/environments can be defined elsewhere in the hierarchy
+# and should use 3500+ so that they don't overlap with these common accounts.
+# Account UIDs should increment by 5 to avoid collisions with system/manually created accounts.
+
+#user_accounts:
+#  examplepuppetaccount:
+#    uid: 3200
+#    ssh_key_type: ssh-rsa
+#    groups:
+#      - users
+#    ssh_key: sshkeygoeshere
+
+#############################################
+## Global base packages to install everywhere.
+site_profile::base::base_packages:
+  - bash-completion
+  - dstat
+  - git
+  - htop
+  - iotop
+  - lsof
+  - mlocate
+  - ntp
+  - perl-DBM-Deep
+  - strace
+  - tcpdump
+  - telnet
+  - yum-plugin-replace
+
+#############################################
+## Denyhosts Configuration.
+enable_denyhosts: TRUE
+# Global allowed hosts
+denyhosts::allow:
+  - 127.0.0.1
+
+#############################################
+## sshd Configuration.
+ssh::server::storeconfigs_enabled: false
+ssh::server::options:
+  'ClientAliveInterval': '120'
+
+#############################################
+# Yum cron settings.
+yum_cron::check_only: 'yes'
+yum_cron::randomwait: '10'
+yum_cron::mailto: 'you@example.com'
+yum_cron::days_of_week: '0'
+
+#############################################
+## Web Settings
+
+# Don't use the module's default vhost, we'll create our own.
+apache::default_vhost: false
+
+site_profile::web::vhosts:
+  vagrant-test.tag1consulting.dev:
+    port: 80
+    docroot: /var/www/html
+    default_vhost: true
+    directories:
+      - path: '/var/www/html'
+        allow_override: All
+        options:
+          - Indexes
+          - FollowSymLinks
+          - MultiViews
+
+# php.ini settings
+site_profile::web::php_ini:
+  /etc/php.ini:
+    template: 'php/php.ini-el6.erb'
+    max_execution_time: '60'
+    max_input_time: '60'
+    max_input_vars: '2000'
+    memory_limit: '256M'
+    error_reporting: 'E_ALL & ~E_NOTICE'
+    display_errors: 'On'
+    log_errors: 'On'
+    post_max_size: '128M'
+    upload_max_filesize: '128M'
+    allow_url_fopen: 'On'
+    date_timezone: 'America/Los_Angeles'
+
+# Install/configure the PHP Memcache extension by default.
+site_profile::web::enable_php_memcached: TRUE
+
+site_profile::web::php_memcache_ini:
+  memcache.hash_strategy: 'consistent'
+
+#############################################
+# Memcached Settings.
+
+site_profile::web::enable_memcached: TRUE
+memcached::port: 11211
+memcached::listen: '127.0.0.1'
+memcached::size: 128
+
+#############################################
+# MySQL Settings.
+
+# If you use this for anything but a throwaway dev VM, this setting should
+# be moved to a private hiera repo!
+mysql::server::root_password: 'oerLA9mpdzTT0Rgtfy'
+
+mysql::server::databases:
+  'drupal':
+    ensure: 'present'
+    charset: 'utf8'
+
+# my.cnf default settings
+mysql::server::override_options:
+  mysqld:
+    max_connections: '50'
+    max_connect_errors: '50000'
+    long_query_time: '5'
+    slow_query_log: '1'
+    slow_query_log_file: 'mysql-slow.log'
+    max_allowed_packet: '32M'
+    expire_logs_days: '7'
+    thread_cache_size: '64'
+    table_cache: '1024'
+    query_cache_size: '32M'
+    query_cache_min_res_unit: '2048'
+    max_heap_table_size: '32M'
+    tmp_table_size: '32M'
+    join_buffer_size: '1M'
+    read_rnd_buffer_size: '4M'
+    key_buffer_size: '64M'
+    default_storage_engine: 'innodb'
+    innodb_data_home_dir: '/var/lib/mysql'
+    innodb_data_file_path: 'ibdata1:10M:autoextend'
+    innodb_log_group_home_dir: '/var/lib/mysql'
+    innodb_buffer_pool_size: '512M'
+    innodb_flush_log_at_trx_commit: '2'
+    innodb_log_buffer_size: '2M'
+    innodb_log_files_in_group: '2'
+    innodb_log_file_size: '100M'
+    binlog_format: 'row'
+    character-set-server: 'utf8'
+    collation-server: 'utf8_general_ci'
+
+  mysqldump:
+    max_allowed_packet: '32M'
+
+# Packages to install on DB server hosts.
+site_profile::db::mysql_additional_pkgs:
+  - percona-toolkit
+  - percona-xtrabackup
+
+#############################################
+# Sudo Settings.
+
+# Default sudo configuration: wheel group can use sudo for all commands.
+site_profile::base::sudo_conf:
+  admins:
+    priority: 10
+    content: '%wheel ALL=(ALL) ALL'
+
+#############################################
+# Web Test Settings.
+# Packages required for testing.
+site_profile::web_test::test_packages:
+  - perl-Chart

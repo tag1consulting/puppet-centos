@@ -1,0 +1,26 @@
+# This file allows you to make local config changes to your vagrant configuration
+# Copy it to "Vagrantfile.local" (which is in .gitignore) and config here
+# will be included in your Vagrantfile
+# You can also use ~/.vagrant.d/Vagrantfile to provide overall config for all
+# vagrant instances.
+
+# To keep a yum cache, especially if you don't want to use bandwidth rebuilding,
+# uncomment
+# $vagrant_yum_cache = "/var/cache/vagrant/yum_cache"
+
+
+# SSH Settings
+# DON'T USE THE DEFAULT VAGRANT KEY!
+$ssh_private_key_path = '/path/to/local/ssh/private/key'
+
+# Rackspace Settings.
+# These are described at https://github.com/mitchellh/vagrant-rackspace
+$rackspace_user = 'your.rs.user.here.'
+$rackspace_api_key = 'rs.api.key'
+$rackspace_region = 'ord'
+$rackspace_flavor = '1 GB Performance'
+$rackspace_image = /CentOS/
+# If you have a key already installed in the RS cloud panel, you
+# can reference it here by name to have it installed in root's authorized_keys.
+$rackspace_key_name = 'vagrant_test_key'
+$rackspace_server_name = 'vagrant_test'

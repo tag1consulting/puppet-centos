@@ -1,0 +1,6 @@
+# Configuration for VirtulBox VMs (e.g. Vagrant).
+
+#################################################
+# Class definitions.
+classes:
+  - site_profile::vagrant

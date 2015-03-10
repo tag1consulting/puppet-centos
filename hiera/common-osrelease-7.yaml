@@ -1,0 +1,64 @@
+# Common settings for all CentOS/RHEL 7.x Hosts
+
+#############################################
+# Firewall settings.
+# disable firewall until we have firewalld support in place.
+enable_firewall: FALSE
+
+#############################################
+# MySQL Settings.
+# MySQL client packages. CentOS 7 uses mariadb from base CentOS.
+site_profile::dbclient::mysql_client_packages:
+  - mariadb
+  - mariadb-libs
+
+# Default to mariadb server in base.
+mysql::server::package_name: mariadb-server
+
+# mysql55 replacement not needed under C7.
+site_profile::dbclient::replace_mysql_with_mysql55: FALSE
+
+# Disable Percona-Server and Percona-XtraDB packages which conflict with mariadb packages.
+yumrepos::percona::percona_exclude: 'Percona-Server* Percona-XtraDB*'
+
+#############################################
+# C7-specific packages to install by default.
+site_profile::base::base_packages:
+  - man-db
+
+#############################################
+## Denyhosts Configuration.
+# No denyhosts on C7.
+enable_denyhosts: FALSE
+
+#############################################
+## PHP Settings
+# CentOS 7 hosts default to PHP 5.4 in the base release.
+# The zendopcache package is from EPEL.
+php::mod_php5::php_package_name: 'php'
+php::common::common_package_name: 'php-common'
+php::cli::cli_package_name: 'php-cli'
+site_profile::web::php_opcache_packagename: 'php-pecl-zendopcache'
+site_profile::web::php_memcache_packagename: 'php-pecl-memcache'
+
+# These are common modules for all web hosts.
+# This array is looked up with hiera(), so no merge is done:
+# If you specify 'site_profile::web::php_packages' in another hiera file, you must
+# include any/all of the desired packages from below as well.
+# This list should *not* include apc/opcache or memcache packages as those are handled separately.
+site_profile::web::php_packages:
+  - php-gd
+  - php-imap
+  - php-mbstring
+  - php-mcrypt
+  - php-mysql
+  - php-pdo
+  - php-pear
+  - php-soap
+  - php-xml
+  - php-xmlrpc
+
+# PHP Opcache Configuration.
+site_profile::web::php_opcache_ini:
+  opcache.enable: 1
+  opcache.memory_consumption: 96

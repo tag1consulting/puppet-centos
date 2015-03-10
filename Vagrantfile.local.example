@@ -1,0 +1,55 @@
+# This file allows you to make local config changes to your vagrant configuration
+# Copy it to "Vagrantfile.local" (which is in .gitignore) and config here
+# will be included in your Vagrantfile
+# You can also use ~/.vagrant.d/Vagrantfile to provide overall config for all
+# vagrant instances.
+
+# Changes to cpus, memory, etc. require a vagrant reload of course
+
+# Keeping a yum cache directory can help save bandwidth -- useful on a slow connection.
+# To enable: uncomment the next line and set it to a valid path on your host machine.
+# $vagrant_yum_cache = "/var/cache/vagrant/yum_cache"
+
+# You can configure many vms here if necessary.
+# Adjust memory and CPUs as needed.
+$vms = {
+  "default" => { "fqdn" => "vagrant-test.tag1consulting.dev", "ipaddress" => "10.10.10.10", "memory" => "2048", "cpus" => "2" },
+  }
+
+
+# Provide list of source mounts. The type defaults to virtualbox, but you could
+# also use nfs (on Mac/Linux) or the rsync type.
+# See http://docs.vagrantup.com/v2/synced-folders/index.html
+#
+# Changes to mounts require a 'vagrant reload'.
+#
+# Using the 'rsync' mount type is suggested if you are mounting a Drupal webroot
+# because Drupal will have performance issues running from NFS or Virtalbox mounts.
+# http://docs.vagrantup.com/v2/synced-folders/rsync.html
+#
+# If you use the 'rsync' type you'll need to either manually rsync with
+# 'vagrant rsync' or run 'vagrant rsync-auto', which rsyncs continuously
+# as you change files on the host workstation.
+# If you want to use rsync-auto, it must be specified in the mount definition below.
+# http://docs.vagrantup.com/v2/cli/rsync-auto.html
+#
+# If rsync isn't an option, Linux and OS X hosts have better performance with NFS
+# mounts than with Virtualbox mounts. To use NFS mounts, you'll need to edit /etc/sudoers
+# on your host machine as described at:
+# https://docs.vagrantup.com/v2/synced-folders/nfs.html
+#
+#$dev_mounts = {
+#  "dev" => {
+#    "vm_mountpoint" => "/var/www/html/",
+#    "host_mountpoint" => "/path/to/host/directory/to/sync",
+#    "type" => "rsync",
+#    "rsync__args" => ["--verbose", "--archive", "--delete", "-z"],
+#    "rsync__exclude" => [".vagrant/", ".git/", "settings.local.php"]
+#    "rsync__auto" => false,
+#  },
+#  "otherfiles" => {
+#    "vm_mountpoint" => "/var/www/otherfiles",
+#    "host_mountpoint" => "/Users/you/otherfiles",
+#    "type" => "nfs",
+#    "mount_options:" => ["dmode=775", "fmode=664"]
+#  },
