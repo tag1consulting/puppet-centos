@@ -57,8 +57,3 @@ site_profile::web::php_packages:
   - php-soap
   - php-xml
   - php-xmlrpc
-
-# PHP Opcache Configuration.
-site_profile::web::php_opcache_ini:
-  opcache.enable: 1
-  opcache.memory_consumption: 96

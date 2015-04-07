@@ -39,6 +39,7 @@ class site_profile::web {
     /opcache/: {
       php::module::ini { 'opcache':
         pkgname  => $opcache_pkg_name,
+        prefix   => hiera('site_profile::web::php_opcache_prefix', '10'),
         settings => hiera_hash('site_profile::web::php_opcache_ini', {}),
         zend     => true,
       }
