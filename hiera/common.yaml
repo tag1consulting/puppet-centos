@@ -122,6 +122,14 @@ site_profile::web::enable_php_memcached: TRUE
 site_profile::web::php_memcache_ini:
   memcache.hash_strategy: 'consistent'
 
+# PHP Opcache Configuration.
+site_profile::web::php_opcache_ini:
+  opcache.enable: 1
+  opcache.memory_consumption: 96
+
+# This matches the '10-' prefix used in the RPM for the PHP opcache ini file.
+site_profile::web::php_opcache_prefix: '10'
+
 #############################################
 # Memcached Settings.
 
