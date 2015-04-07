@@ -49,7 +49,7 @@ node default {
   class { 'yumrepos::ius': stage => 'pre' }
 
   $enable_firewall = hiera('enable_firewall', TRUE)
-  if($enable_firwall) {
+  if($enable_firewall) {
     # Firewall setup
     resources { 'firewall':
       purge => true
