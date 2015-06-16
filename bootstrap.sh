@@ -26,7 +26,8 @@ rpm -q --quiet rubygem-deep-merge || yum -y install rubygem-deep-merge
 rpm -q --quiet ruby-devel || yum -y install ruby-devel
 
 # Install r10k to handle Puppet module installation.
-[[ "$(gem query -i -n r10k)" == "true" ]] || gem install --no-rdoc --no-ri r10k
+# EL6 has Ruby 1.8, so we need to pull in the latest 1.x version of r10k
+[[ "$(gem query -i -n r10k)" == "true" ]] || gem install --no-rdoc --no-ri r10k -v 1.5.1
 
 # system_timer ruby gem is needed to avoid warnings on the CentOS 6 version of Ruby (1.8)
 [[ "$(gem query -i -n system_timer)" == "true" ]] || gem install --no-rdoc --no-ri system_timer
