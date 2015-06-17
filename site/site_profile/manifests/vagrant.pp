@@ -8,7 +8,7 @@ class site_profile::vagrant {
   sudo::conf { 'vagrant':
     content => 'vagrant ALL=(ALL) NOPASSWD: ALL',
   }
-  sudo::conf { 'vagrant notty':
+  sudo::conf { 'vagrant_notty':
     content => 'Defaults:vagrant !requiretty',
   }
 
