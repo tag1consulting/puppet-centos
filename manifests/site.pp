@@ -25,13 +25,6 @@ File {
 
 Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
 
-# Default firewall rules to TCP protocol, and accept so they
-# don't need to be defined with each rule.
-Firewall {
-  proto  => tcp,
-  action => accept
-}
-
 # Set allow_virtual for newer Puppet versions.
 if (versioncmp($::puppetversion, '3.6.1') >= 0) {
   $allow_virtual= hiera('allow_virtual_packages', TRUE)
@@ -48,19 +41,19 @@ node default {
   class { 'yumrepos::epel': stage => 'pre' }
   class { 'yumrepos::ius': stage => 'pre' }
 
+  # EL6 firewall config needs some extra pre/post logic.
   $enable_firewall = hiera('enable_firewall', TRUE)
-  if($enable_firewall) {
-    # Firewall setup
+  if($enable_firewall and $operatingsystemmajrelease == 6) {
     resources { 'firewall':
       purge => true
     }
     class { 'firewall': stage => 'pre' }
     Firewall {
-      before  => Class['site_firewall::post'],
-      require => Class['site_firewall::pre'],
+      before  => Class['site_iptables::post'],
+      require => Class['site_iptables::pre'],
     }
-    class { 'site_firewall::pre': stage => 'pre' }
-    class { 'site_firewall::post': }
+    class { 'site_iptables::pre': stage => 'pre' }
+    class { 'site_iptables::post': }
   }
 
 }

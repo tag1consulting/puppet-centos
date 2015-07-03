@@ -8,7 +8,7 @@ class site_profile::base {
   if ($enable_firewall) {
     # Firewall configuration common for all hosts.
     $firewall_rules = hiera_hash('site_profile::base::firewall_rules', {})
-    create_resources('firewall', $firewall_rules)
+    create_resources(hiera('firewall_provider', 'firewall'), $firewall_rules)
   }
 
   # Packages to be added to all machines for convenience or necessity.

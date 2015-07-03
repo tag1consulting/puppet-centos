@@ -1,9 +1,22 @@
 # Common settings for all CentOS/RHEL 7.x Hosts
 
-#############################################
-# Firewall settings.
-# disable firewall until we have firewalld support in place.
-enable_firewall: FALSE
+classes:
+  - site_firewalld
+
+##################################################
+# Firewall Configuration.
+#
+# EL7 firewall type is 'firewalld_rich_rule'.
+firewall_provider: 'firewalld_rich_rule'
+
+# Default firewall rules.
+site_profile::base::firewall_rules:
+  'Accept SSH from any':
+    ensure: 'present'
+    zone: 'public'
+    service: 'ssh'
+    action: 'accept'
+
 
 #############################################
 # MySQL Settings.

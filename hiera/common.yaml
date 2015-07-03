@@ -13,15 +13,6 @@ classes:
 enable_yum_cron: FALSE
 allow_virtual_packages: TRUE
 
-##################################################
-## Firewall Rules.
-site_profile::base::firewall_rules:
-  '010 allow ssh access':
-    port: [22]
-site_profile::web::firewall_rules:
-  '100 allow http and https access':
-    port: [80, 443]
-
 #############################################
 ## User configuration
 # Passwords must NOT be stored here. They go into the private hiera repo (JSON backend).
@@ -86,6 +77,9 @@ yum_cron::days_of_week: '0'
 
 # Don't use the module's default vhost, we'll create our own.
 apache::default_vhost: false
+
+#Don't enable Trace.
+apache::trace_enable: false
 
 site_profile::web::vhosts:
   vagrant-test.tag1consulting.dev:
