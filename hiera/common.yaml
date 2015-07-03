@@ -13,15 +13,6 @@ classes:
 enable_yum_cron: FALSE
 allow_virtual_packages: TRUE
 
-##################################################
-## Firewall Rules.
-site_profile::base::firewall_rules:
-  '010 allow ssh access':
-    port: [22]
-site_profile::web::firewall_rules:
-  '100 allow http and https access':
-    port: [80, 443]
-
 #############################################
 ## User configuration
 # Passwords must NOT be stored here. They go into the private hiera repo (JSON backend).

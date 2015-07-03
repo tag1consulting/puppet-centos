@@ -1,14 +1,14 @@
-# Class site_firewall::pre
+# Class site_iptables::pre
 #
-# This class ensures a base set of firewall rules
+# This class ensures a base set of iptables rules
 # that should be in place before rules added by other classes/profiles.
 #
-class site_firewall::pre {
+class site_iptables::pre {
   Firewall {
     require => undef,
   }
 
-  # Default firewall rules
+  # Default iptables rules
   firewall { '000 accept all icmp':
     proto  => 'icmp',
     action => 'accept',
