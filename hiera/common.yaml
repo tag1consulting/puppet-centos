@@ -87,6 +87,9 @@ yum_cron::days_of_week: '0'
 # Don't use the module's default vhost, we'll create our own.
 apache::default_vhost: false
 
+#Don't enable Trace.
+apache::trace_enable: false
+
 site_profile::web::vhosts:
   vagrant-test.tag1consulting.dev:
     port: 80
