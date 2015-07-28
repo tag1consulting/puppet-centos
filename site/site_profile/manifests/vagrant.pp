@@ -12,5 +12,7 @@ class site_profile::vagrant {
     content => 'Defaults:vagrant !requiretty',
   }
 
+  # Create blank vagrant database for development
+  create_resources('mysql::db', hiera_hash('databases'))
 
 }
