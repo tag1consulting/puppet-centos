@@ -68,7 +68,8 @@ Vagrant.configure('2') do |config|
     config.vm.define "#{name}" do |name|
       # myvm.vm.provision "shell", inline: "echo hello from slave #{myname}"
       name.vm.network :private_network, ip: attributes["ipaddress"]
-      if defined? attributes["forwarded_port"]
+      $forwarded_port = attributes["forwarded_port"]
+      unless $forwarded_port.nil? || $forwarded_port == 0
         if !defined? $port_base
           $port_base = 1000
         end
@@ -140,7 +141,10 @@ Vagrant.configure('2') do |config|
       $link = "http://localhost:" + $port.to_s + "/"
       puts
       puts $banner
-      puts $link.underline
+      unless $forwarded_port.nil? || $forwarded_port == 0
+        $link = "http://localhost:" + $port.to_s + "/"
+        puts $link.underline
+      end
       puts
     end
   end
