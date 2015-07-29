@@ -20,9 +20,11 @@ Due to a quirk in the way Vagrant syncs folders, you will need to run ```vagrant
 
 A blank database is created automatically.  The database name, username, and password are all "vagrant".
 
-To install Drush 8, run:  ```vagrant ssh -c "sudo /vagrant/scripts/drush8.sh".  Once Drush 8 is installed, you can set up the initial Drupal database by running: ```vagrant ssh -c "cd /var/www/html && drush si -y standard --db-url=mysql://vagrant:vagrant@localhost/vagrant"``` or by using the install.php web UI.
+To install Drush 8, run:  ```vagrant ssh -c "sudo /vagrant/scripts/drush8.sh"```
 
-## Other usfeul commands
+Once Drush 8 is installed, you can set up the initial Drupal database by running: ```vagrant ssh -c "cd /var/www/html && drush si -y standard --db-url=mysql://vagrant:vagrant@localhost/vagrant"``` or by using the install.php web UI.
+
+## Other useful commands
 * ```vagrant halt``` - power off the virtual machine
 * ```vagrant suspend``` - hibernate the virtual machine
 * ```vagrant up``` - start up the virtual machine, creating it if necessary
