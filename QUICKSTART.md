@@ -7,13 +7,16 @@ To start up a LAMP stack virtual machine ready for Drupal 8 development, do the 
 0. Install optional plugins (this only needs to happen once on your workstation): 
   * ```vagrant plugin install vagrant-triggers && vagrant plugin install vagrant-cachier```
 0. Run ```vagrant up``` to start up the virtual machine.  You will be presented with a link at the end of the startup to the virtual machine: 
-  * ```==> default: Running triggers after up...
+```
+==> default: Running triggers after up...
 
 ==>  VAGRANT for puppet-centos
-http://localhost:6480/```
+http://localhost:6480/
+```
 
 The link can be re-displayed at any time by running ```vagrant up```
-0. Due to a quirk in the way Vagrant syncs folders, you will need to run ```vagrant rsync``` after the initial provisioning is complete to set the webroot file permissions properly. 
+
+Due to a quirk in the way Vagrant syncs folders, you will need to run ```vagrant rsync``` after the initial provisioning is complete to set the webroot file permissions properly. 
 
 A blank database is created automatically.  The database name, username, and password are all "vagrant".
 
