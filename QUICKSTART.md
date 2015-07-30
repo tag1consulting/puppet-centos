@@ -23,7 +23,7 @@ A blank database is created automatically.  The database name, username, and pas
 
 To install Drush 8, run:  ```vagrant ssh -c "sudo /vagrant/scripts/drush8.sh"```
 
-Once Drush 8 is installed, you can set up the initial Drupal database by running: ```vagrant ssh -c "cd /var/www/html && drush si -y standard --db-url=mysql://vagrant:vagrant@localhost/vagrant"``` or by using the install.php web UI.
+You can set up the initial Drupal database using the install.php web UI or drush.
 
 ## Other useful commands
 * ```vagrant halt``` - power off the virtual machine
