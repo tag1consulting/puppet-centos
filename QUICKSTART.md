@@ -11,8 +11,8 @@ To start up a LAMP stack virtual machine ready for Drupal 8 development, do the 
 ```
 ==> default: Running triggers after up...
 
-==>  VAGRANT for puppet-centos
-http://localhost:6480/
+==> default: Build complete for puppet-centos
+==> default: http://localhost:6480/
 ```
 
 The link can be re-displayed at any time by running ```vagrant up```
