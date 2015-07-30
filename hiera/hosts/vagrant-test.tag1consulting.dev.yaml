@@ -50,12 +50,23 @@ site_profile::web::vhosts:
 #################################################
 # MySQL configuration.
 
-databases:
-  vagrant:
-    user: "vagrant"
-    password: "vagrant"
-    host: "localhost"
-    grant: "ALL"
+mysql::server::databases:
+  'vagrant':
+    ensure: 'present'
+    charset: 'utf8'
+
+mysql::server::users:
+  'vagrant@localhost':
+    ensure: 'present'
+    password_hash: '*04E6E1273D1783DF7D57DC5479FE01CFFDFD0058'
+
+mysql::server::grants:
+  'vagrant@localhost/vagrant.*':
+    ensure: 'present'
+    user: 'vagrant@localhost'
+    privileges: ['ALL']
+    table: 'vagrant.*'
+
 
 #################################################
 # Sudo configuration.
