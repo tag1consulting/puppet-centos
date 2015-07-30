@@ -137,13 +137,13 @@ Vagrant.configure('2') do |config|
   end
   if Vagrant.has_plugin?("vagrant-triggers")
     config.trigger.after [:up, :resume, :status, :restart, :reload] do
-      $banner = "==> ".bold + " VAGRANT for " + (project).to_s.yellow.bold
+      $banner = "Build complete".green + " for ".clean + (project).to_s.bold.yellow
       $link = "http://localhost:" + $port.to_s + "/"
       puts
-      puts $banner
+      info $banner
       unless $forwarded_port.nil? || $forwarded_port == 0
         $link = "http://localhost:" + $port.to_s + "/"
-        puts $link.underline
+        info $link.underline
       end
       puts
     end
