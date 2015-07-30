@@ -1,4 +1,4 @@
-hostname = %x[ hostname -f ]
+hostname = %x[ hostname ]
 username = %x[ whoami ]
 
 # You might want to replace this with a literal project name.
