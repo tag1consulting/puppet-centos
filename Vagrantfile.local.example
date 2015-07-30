@@ -13,7 +13,7 @@
 # You can configure many vms here if necessary.
 # Adjust memory and CPUs as needed.
 $vms = {
-  "default" => { "fqdn" => "vagrant-test.tag1consulting.dev", "ipaddress" => "10.10.10.10", "memory" => "2048", "cpus" => "2" },
+  "default" => { "fqdn" => "vagrant-test.tag1consulting.dev", "ipaddress" => "10.10.10.10", "memory" => "2048", "cpus" => "2", "forwarded_port" => 80 },
   }
 
 
