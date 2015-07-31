@@ -17,8 +17,6 @@ To start up a LAMP stack virtual machine ready for Drupal 8 development, do the 
 
 The link can be re-displayed at any time by running ```vagrant up```
 
-Due to a quirk in the way Vagrant syncs folders, you will need to run ```vagrant rsync``` after the initial provisioning is complete to set the webroot file permissions properly. 
-
 A blank database is created automatically.  The database name, username, and password are all "vagrant".
 
 To install Drush 8, run:  ```vagrant ssh -c "sudo /vagrant/scripts/drush8.sh"```

@@ -37,7 +37,7 @@ $vms = {
 #
 $dev_mounts = {
   "dev" => {
-    "vm_mountpoint" => "/var/www/html/",
+    "vm_mountpoint" => "/var/www/vagrant-multi1.tag1consulting.com",
     "host_mountpoint" => "./html",
     "type" => "rsync",
     "rsync__args" => ["--verbose", "--archive", "-z"],

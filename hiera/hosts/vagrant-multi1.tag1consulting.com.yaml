@@ -6,12 +6,15 @@
 site_profile::web::vhosts:
   vagrant-multi1.tag1consulting.com:
     port: 80
-    docroot: /var/www/html
+    docroot: /var/www/vagrant-multi1.tag1consulting.com
+    serveraliases:
+      - localhost
+      - vagrant-multi1
     docroot_owner: 'apache'
     docroot_group: 'vagrant'
     docroot_mode: '2775'
     directories:
-      - path: '/var/www/html'
+      - path: '/var/www/vagrant-multi1.tag1consulting.com'
         allow_override: All
         options:
           - Indexes
