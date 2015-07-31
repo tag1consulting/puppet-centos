@@ -4,7 +4,7 @@
 # Apache configuration.
 
 site_profile::web::vhosts:
-  vagrant-test.tag1consulting.dev:
+  vagrant-multi1.tag1consulting.com:
     port: 80
     docroot: /var/www/html
     docroot_owner: 'apache'
