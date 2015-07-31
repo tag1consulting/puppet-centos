@@ -1,18 +1,8 @@
-# Configuration for vagrant-test.tag1consulting.dev
+# Default configuration for vagrant-multi1.tag1consulting.com
 #
-# This file contains example Hiera configuration that can be used to
-# override or append to default settings in common.yaml.
-# In order to be pulled in by Hiera, the file must be named the same as your VM FQDN
-# (configured in Vagrantfile.local, or defaults to vagrant-test.tag1consulting.dev)
-# with a .yaml extension. e.g. vagrant-test.tag1consulting.dev.yaml
-
 #################################################
 # Apache configuration.
 
-# Example 1: expand the default vhost definition to include an additional
-# <Location> block and an alias to access it.
-#
-# The hostname 'vagrant-test.tag1consulting.dev' matches the definition in common.yaml.
 site_profile::web::vhosts:
   vagrant-test.tag1consulting.dev:
     port: 80
@@ -28,27 +18,13 @@ site_profile::web::vhosts:
           - FollowSymLinks
           - MultiViews
 
-# Example 3: Create your own vhost and set is as the default apache vhost.
-# This will allow your vhost to match any hostname except for 'vagrant-test.tag1consulting.dev'.
-#
-#site_profile::web::vhosts:
-#  vagrant-test.tag1consulting.dev:
-#    default_vhost: false
-#
-#  new-default.tag1consulting.dev:
-#    port: 80
-#    default_vhost: true
-#    docroot: /var/www/example3
-#    directories:
-#      - path: '/var/www/example3'
-#        allow_override: All
-#        options:
-#          - Indexes
-#          - FollowSymLinks
-#          - MultiViews
-
 #################################################
 # MySQL configuration.
+#
+# Default database for Vagrant:
+# Database name: vagrant
+# User name: vagrant
+# Password: vagrant
 
 mysql::server::databases:
   'vagrant':
