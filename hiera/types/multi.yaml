@@ -1,0 +1,7 @@
+# Settings specific to the 'multi' host type (typically Dev VMs).
+
+#############################################
+# Class definitions.
+classes:
+  - site_profile::db
+  - site_profile::web
