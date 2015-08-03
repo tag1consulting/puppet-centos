@@ -6,7 +6,7 @@ To start up a LAMP stack virtual machine ready for Drupal 8 development, do the 
 0. ```cd``` into the repository and clone your webroot into ```html```:
   * ```cd puppet-centos && git clone --branch 8.0.x http://git.drupal.org/project/drupal.git html```
 0. Install optional plugins (this only needs to happen once on your workstation): 
-  * ```vagrant plugin install vagrant-triggers && vagrant plugin install vagrant-cachier```
+  * ```vagrant plugin install vagrant-triggers```
 0. Run ```vagrant up``` to start up the virtual machine.  You will be presented with a link at the end of the startup to the virtual machine: 
 ```
 ==> default: Running triggers after up...
