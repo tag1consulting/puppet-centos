@@ -1,5 +1,14 @@
-modules
+# Exclude puppet modules directory which is populated by r10k
+/modules/*
+# Only keep one file tracked there so that the directory remains in git.
+!/modules/.keep
+
+# Don't track private hiera directory if present.
 hiera_private
+
+# Vagrant excludes.
 .vagrant
 Vagrantfile.local
+
+# vim files.
 *.swp
