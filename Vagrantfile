@@ -9,6 +9,9 @@ VAGRANTFILE_API_VERSION = "2"
 # Require 1.6.2 since that's when the rsync synced folder was stabilized.
 Vagrant.require_version ">= 1.6.2"
 
+# Load zlib so port forwarding works.
+require 'zlib'
+
 project = File.basename(File.dirname(__FILE__));
 
 dirname = File.dirname(__FILE__)
@@ -68,13 +71,18 @@ Vagrant.configure('2') do |config|
     config.vm.define "#{name}" do |name|
       # myvm.vm.provision "shell", inline: "echo hello from slave #{myname}"
       name.vm.network :private_network, ip: attributes["ipaddress"]
+      name.vm.hostname = attributes['fqdn']
       $forwarded_port = attributes["forwarded_port"]
       unless $forwarded_port.nil? || $forwarded_port == 0
+        # Generate unique port forward based on fqdn and directory
+        portname = dirname + '/' + name.vm.hostname
+        crc = Zlib::crc32(portname)
+        $port_base = (crc % 500) * 100 + 3000
         if !defined? $port_base
-          $port_base = 1000
+          $port_base = 4000
         end
         $port = $port_base + attributes["forwarded_port"]
-        name.vm.network :forwarded_port, guest: attributes["forwarded_port"],   host: $port
+        name.vm.network :forwarded_port, guest: attributes["forwarded_port"],   host: $port, auto_correct: true
       end
       name.vm.hostname = attributes['fqdn']
       config.vm.provider "virtualbox" do |v|
