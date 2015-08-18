@@ -5,7 +5,6 @@
 classes:
   - site_profile::db
   - site_profile::web
-  - site_profile::base
 
 # Default to PHP 5.6 from IUS
 php::mod_php5::php_package_name: 'php56u'
