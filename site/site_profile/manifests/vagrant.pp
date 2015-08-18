@@ -12,5 +12,4 @@ class site_profile::vagrant {
     content => 'Defaults:vagrant !requiretty',
   }
 
-
 }

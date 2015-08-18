@@ -1,8 +1,5 @@
-# This file allows you to make local config changes to your vagrant configuration
-# Copy it to "Vagrantfile.local" (which is in .gitignore) and config here
-# will be included in your Vagrantfile
-# You can also use ~/.vagrant.d/Vagrantfile to provide overall config for all
-# vagrant instances.
+# This file provides a default LAMP stack Vagrant VM.  It is overridden by Vagrantfile.local if 
+# it exists.
 
 # Changes to cpus, memory, etc. require a vagrant reload of course
 
@@ -38,15 +35,19 @@ $vms = {
 # on your host machine as described at:
 # https://docs.vagrantup.com/v2/synced-folders/nfs.html
 #
-#$dev_mounts = {
-#  "dev" => {
-#    "vm_mountpoint" => "/var/www/html/",
-#    "host_mountpoint" => "/path/to/host/directory/to/sync",
-#    "type" => "rsync",
-#    "rsync__args" => ["--verbose", "--archive", "--delete", "-z"],
-#    "rsync__exclude" => [".vagrant/", ".git/", "settings.local.php"]
-#    "rsync__auto" => false,
-#  },
+$dev_mounts = {
+  "dev" => {
+    "vm_mountpoint" => "/var/www/vagrant-multi1.tag1consulting.com",
+    "host_mountpoint" => "./html",
+    "type" => "rsync",
+    "rsync__args" => ["--verbose", "--archive", "-z"],
+    "rsync__exclude" => [".vagrant/", ".git/", "settings.local.php", "settings.php", "services.yml"],
+    "rsync__auto" => true,
+    "owner" => "apache",
+    "group" => "vagrant",
+    "rsync__chown" => true,
+  },
+}
 #  "otherfiles" => {
 #    "vm_mountpoint" => "/var/www/otherfiles",
 #    "host_mountpoint" => "/Users/you/otherfiles",

@@ -5,8 +5,6 @@
 # Class definitions.
 classes:
  - site_profile::base
- - site_profile::db
- - site_profile::web
 
 #############################################
 # Global enable/disable flags.
@@ -82,7 +80,7 @@ apache::default_vhost: false
 apache::trace_enable: false
 
 site_profile::web::vhosts:
-  vagrant-test.tag1consulting.dev:
+  vagrant-test.tag1consulting.com:
     port: 80
     docroot: /var/www/html
     default_vhost: true
@@ -93,6 +91,24 @@ site_profile::web::vhosts:
           - Indexes
           - FollowSymLinks
           - MultiViews
+
+# Default to PHP 5.6 from IUS
+php::mod_php5::php_package_name: 'php56u'
+php::common::common_package_name: 'php56u-common'
+php::cli::cli_package_name: 'php56u-cli'
+site_profile::web::php_opcache_packagename: 'php56u-opcache'
+site_profile::web::php_memcache_packagename: 'php56u-pecl-memcache'
+site_profile::web::php_packages:
+  - php56u-gd
+  - php56u-imap
+  - php56u-mbstring
+  - php56u-mcrypt
+  - php56u-mysql
+  - php56u-pdo
+  - php56u-pear
+  - php56u-soap
+  - php56u-xml
+  - php56u-xmlrpc
 
 # php.ini settings
 site_profile::web::php_ini:
