@@ -59,6 +59,7 @@ class site_profile::web {
     php::module { "$php_memcache_packagename": }
     php::module::ini { 'memcache':
       pkgname  => $php_memcache_packagename,
+      prefix   => hiera('site_profile::web::php_memcache_prefix', '40'),
       settings => hiera_hash('site_profile::web::php_memcache_ini', {}),
     }
   }
