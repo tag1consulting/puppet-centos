@@ -9,12 +9,12 @@ firewall_provider: 'firewall'
 # Default firewall rules.
 site_profile::base::firewall_rules:
   '010 allow ssh access':
-    port: [22]
+    dport: [22]
     proto: 'tcp'
     action: 'accept'
 site_profile::web::firewall_rules:
   '100 allow http and https access':
-    port: [80, 443]
+    dport: [80, 443]
     proto: 'tcp'
     action: 'accept'
 
