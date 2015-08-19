@@ -43,30 +43,3 @@ site_profile::base::base_packages:
 ## Denyhosts Configuration.
 # No denyhosts on C7.
 enable_denyhosts: FALSE
-
-#############################################
-## PHP Settings
-# CentOS 7 hosts default to PHP 5.4 in the base release.
-# The zendopcache package is from EPEL.
-php::mod_php5::php_package_name: 'php'
-php::common::common_package_name: 'php-common'
-php::cli::cli_package_name: 'php-cli'
-site_profile::web::php_opcache_packagename: 'php-pecl-zendopcache'
-site_profile::web::php_memcache_packagename: 'php-pecl-memcache'
-
-# These are common modules for all web hosts.
-# This array is looked up with hiera(), so no merge is done:
-# If you specify 'site_profile::web::php_packages' in another hiera file, you must
-# include any/all of the desired packages from below as well.
-# This list should *not* include apc/opcache or memcache packages as those are handled separately.
-site_profile::web::php_packages:
-  - php-gd
-  - php-imap
-  - php-mbstring
-  - php-mcrypt
-  - php-mysql
-  - php-pdo
-  - php-pear
-  - php-soap
-  - php-xml
-  - php-xmlrpc

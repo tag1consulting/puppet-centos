@@ -103,7 +103,7 @@ site_profile::web::php_packages:
   - php56u-imap
   - php56u-mbstring
   - php56u-mcrypt
-  - php56u-mysql
+  - php56u-mysqlnd
   - php56u-pdo
   - php56u-pear
   - php56u-soap
