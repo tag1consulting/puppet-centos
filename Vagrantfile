@@ -44,7 +44,7 @@ Vagrant.configure('2') do |config|
   if defined? $box_url
     config.vm.box_url = $box_url
   else
-    config.vm.box_url = "http://tag1consulting.com/files/centos6-50GB-vbguest.json"
+    config.vm.box_url = "http://tag1consulting.com/files/centos6-50GB-vbguest/metadata.json"
   end
 
   #config.vm.box = "centos6.6-x86_64-50GB-disk-puppet-3.7.3-vbguestaddtions-20141212.box"
