@@ -35,31 +35,23 @@ if !defined? $domainname
 end
 
 Vagrant.configure('2') do |config|
-  config.vm.box = "centos6.6-x86_64-50GB-disk-puppet-3.7.3-vbguestaddtions-20141212.box"
-  config.vm.box_url = "http://tag1consulting.com/files/centos6.6-x86_64-50GB-disk-puppet-3.7.3-vbguestaddtions-20141212.box"
+  if defined? $box
+    config.vm.box = $box
+  else
+    config.vm.box = "tag1/centos6-50GB-vbguest"
+  end
+
+  if defined? $box_url
+    config.vm.box_url = $box_url
+  else
+    config.vm.box_url = "http://tag1consulting.com/files/centos6-50GB-vbguest/metadata.json"
+  end
+
+  #config.vm.box = "centos6.6-x86_64-50GB-disk-puppet-3.7.3-vbguestaddtions-20141212.box"
+  #config.vm.box_url = "http://tag1consulting.com/files/centos6.6-x86_64-50GB-disk-puppet-3.7.3-vbguestaddtions-20141212.box"
 
   # Enable ssh agent forwarding
   config.ssh.forward_agent = true
-
-  # vagrant-cachier for package caching
-  #if Vagrant.has_plugin?("vagrant-cachier")
-  #  # Configure cached packages to be shared between instances of the same base box.
-  #  # More info on http://fgrehm.viewdocs.io/vagrant-cachier/usage
-  #  config.cache.scope = :box
-  #
-  #  # OPTIONAL: If you are using VirtualBox, you might want to use that to enable
-  #  # NFS for shared folders. This is also very useful for vagrant-libvirt if you
-  #  # want bi-directional sync
-  #  config.cache.synced_folder_opts = {
-  #    type: :nfs,
-  #    # The nolock option can be useful for an NFSv3 client that wants to avoid the
-  #    # NLM sideband protocol. Without this option, apt-get might hang if it tries
-  #    # to lock files needed for /var/cache/* operations. All of this can be avoided
-  #    # by using NFSv4 everywhere. Please note that the tcp option is not the default.
-  #    mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
-  #  }
-  #  # For more information please check http://docs.vagrantup.com/v2/synced-folders/basic_usage.html
-  #end
 
   # You can define a $vms array in Vagrantfile.local which says what vms should be launched.
   if !defined? $vms
@@ -81,8 +73,8 @@ Vagrant.configure('2') do |config|
         if !defined? $port_base
           $port_base = 4000
         end
-        $port = $port_base + attributes["forwarded_port"]
-        name.vm.network :forwarded_port, guest: attributes["forwarded_port"],   host: $port, auto_correct: true
+        $port = $port_base + $forwarded_port
+        name.vm.network :forwarded_port, guest: $forwarded_port, host: $port, auto_correct: true
       end
       name.vm.hostname = attributes['fqdn']
       config.vm.provider "virtualbox" do |v|
@@ -104,8 +96,6 @@ Vagrant.configure('2') do |config|
     config.vm.provision "shell",
       inline: "echo '--- Turning on yum caching in /etc/yum.conf ---'; perl -pi.bak -e 's/keepcache=0/keepcache=1/' /etc/yum.conf"
   end
-
-  # Allow yum caching.
 
   # Mount any development directories
   if defined? $dev_mounts
@@ -143,6 +133,9 @@ Vagrant.configure('2') do |config|
       "domain" => $domainname,
     }
   end
+  # Run post-puppet.sh
+  config.vm.provision "shell", path: 'scripts/post-puppet.sh'
+
   if Vagrant.has_plugin?("vagrant-triggers")
     config.trigger.after [:up, :resume, :status, :restart, :reload] do
       $banner = "Build complete".green + " for ".clean + (project).to_s.bold.yellow

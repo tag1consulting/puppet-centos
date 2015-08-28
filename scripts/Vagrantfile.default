@@ -13,6 +13,9 @@ $vms = {
   "default" => { "fqdn" => "vagrant-multi1.tag1consulting.com", "ipaddress" => "10.10.10.10", "memory" => "2048", "cpus" => "2", "forwarded_port" => 80 },
   }
 
+# Box source
+$box = "tag1/centos6-50GB-vbguest"
+$box_url = "http://tag1consulting.com/files/centos6-50GB-vbguest/metadata.json"
 
 # Provide list of source mounts. The type defaults to virtualbox, but you could
 # also use nfs (on Mac/Linux) or the rsync type.
@@ -40,10 +43,10 @@ $dev_mounts = {
     "vm_mountpoint" => "/var/www/vagrant-multi1.tag1consulting.com",
     "host_mountpoint" => "./html",
     "type" => "rsync",
-    "rsync__args" => ["--verbose", "--archive", "-z"],
+    "rsync__args" => ["--verbose", "--archive", "-zX"],
     "rsync__exclude" => [".vagrant/", ".git/", "settings.local.php", "settings.php", "services.yml"],
     "rsync__auto" => true,
-    "owner" => "apache",
+    "owner" => "vagrant",
     "group" => "vagrant",
     "rsync__chown" => true,
   },
