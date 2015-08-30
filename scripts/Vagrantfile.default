@@ -15,7 +15,7 @@ $vms = {
 
 # Box source
 $box = "tag1/centos6-50GB-vbguest"
-$box_url = "http://tag1consulting.com/files/centos6-50GB-vbguest/metadata.json"
+$box_url = "http://pkg.tag1consulting.com/vagrant-boxes/centos6-50GB-vbguest/metadata.json"
 
 # Provide list of source mounts. The type defaults to virtualbox, but you could
 # also use nfs (on Mac/Linux) or the rsync type.
