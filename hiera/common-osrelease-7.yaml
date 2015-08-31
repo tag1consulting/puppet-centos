@@ -17,6 +17,19 @@ site_profile::base::firewall_rules:
     service: 'ssh'
     action: 'accept'
 
+# Web firewall rules.
+site_profile::web::firewall_rules:
+  'Allow http from all':
+    ensure: 'present'
+    zone: 'public'
+    service: 'http'
+    action: 'accept'
+  'Allow https from all':
+    ensure: 'present'
+    zone: 'public'
+    service: 'https'
+    action: 'accept'
+
 
 #############################################
 # MySQL Settings.
