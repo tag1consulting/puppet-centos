@@ -38,13 +38,13 @@ Vagrant.configure('2') do |config|
   if defined? $box
     config.vm.box = $box
   else
-    config.vm.box = "tag1/centos6-50GB-vbguest"
+    config.vm.box = "tag1/centos7-50GB-vbguest"
   end
 
   if defined? $box_url
     config.vm.box_url = $box_url
   else
-    config.vm.box_url = "http://pkg.tag1consulting.com/vagrant-boxes/centos6-50GB-vbguest/metadata.json"
+    config.vm.box_url = "http://pkg.tag1consulting.com/vagrant-boxes/centos7-50GB-vbguest/metadata.json"
   end
 
   # Enable ssh agent forwarding
