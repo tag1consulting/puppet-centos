@@ -46,3 +46,7 @@ mysql::server::grants:
     privileges: ['ALL']
     table: 'vagrant.*'
 
+#################################################
+# SELinux configuration.
+# Disable selinux on Dev VM.
+selinux::mode: 'disabled'

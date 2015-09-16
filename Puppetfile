@@ -3,7 +3,7 @@ forge 'forge.puppetlabs.com'
 
 # Install modules from the Forge
 mod 'crayfishx/firewalld', '1.0.0'
-mod 'jfryman/selinux', '0.2.3'
+mod 'jfryman/selinux', '0.2.5'
 mod 'puppetlabs/apache', '1.5.0'
 mod 'puppetlabs/concat', '1.2.3'
 mod 'puppetlabs/denyhosts', '0.1.0'

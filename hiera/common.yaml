@@ -5,6 +5,7 @@
 # Class definitions.
 classes:
  - site_profile::base
+ - selinux
 
 #############################################
 # Global enable/disable flags.
@@ -215,3 +216,8 @@ site_profile::base::sudo_conf:
 # Packages required for testing.
 site_profile::web_test::test_packages:
   - perl-Chart
+
+#################################################
+# SELinux configuration.
+# Enable selinux by default.
+selinux::mode: 'enforcing'
