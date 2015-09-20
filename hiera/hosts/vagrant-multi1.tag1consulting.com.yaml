@@ -4,6 +4,8 @@
 # Apache configuration.
 
 site_profile::web::vhosts:
+  vagrant-test.tag1consulting.com:
+    default_vhost: false
   vagrant-multi1.tag1consulting.com:
     port: 80
     docroot: /var/www/vagrant-multi1.tag1consulting.com
