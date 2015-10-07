@@ -4,4 +4,5 @@
 # Class definitions.
 classes:
   - site_profile::db
+  - site_profile::phpxdebug
   - site_profile::web

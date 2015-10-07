@@ -108,7 +108,6 @@ site_profile::web::php_packages:
   - php56u-pdo
   - php56u-pear
   - php56u-soap
-  - php56u-xdebug
   - php56u-xml
   - php56u-xmlrpc
 
