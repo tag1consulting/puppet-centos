@@ -13,6 +13,7 @@ class site_profile::phpxdebug (
     prefix   => $xdebug_ini_prefix,
     settings => $xdebug_settings,
     zend     => true,
+    notify   => Service['httpd'],
   }
 
 }
