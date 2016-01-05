@@ -81,6 +81,18 @@ apache::default_vhost: false
 #Don't enable Trace.
 apache::trace_enable: false
 
+#configure deflate module
+apache::mod::deflate::types:
+  - 'text/html'
+  - 'text/plain'
+  - 'text/xml'
+  - 'text/css'
+  - 'text/javascript'
+  - 'application/x-javascript'
+  - 'application/javascript'
+  - 'application/ecmascript'
+  - 'application/rss+xml'
+
 site_profile::web::vhosts:
   vagrant-test.tag1consulting.com:
     port: 80
