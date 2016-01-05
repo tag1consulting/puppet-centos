@@ -64,6 +64,11 @@ ssh::server::storeconfigs_enabled: false
 ssh::server::options:
   'ClientAliveInterval': '120'
   'PasswordAuthentication': 'no'
+  'Protocol': '2'
+  'SyslogFacility': 'AUTHPRIV'
+  'UsePrivilegeSeparation': 'sandbox'
+  'PermitRootLogin': 'no'
+  'X11Forwarding': 'no'
 
 #############################################
 # Yum cron settings.
