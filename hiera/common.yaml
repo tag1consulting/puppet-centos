@@ -66,6 +66,7 @@ ssh::server::options:
   'PasswordAuthentication': 'no'
   'Protocol': '2'
   'SyslogFacility': 'AUTHPRIV'
+  'LogLevel': 'VERBOSE'
   'UsePrivilegeSeparation': 'sandbox'
   'PermitRootLogin': 'no'
   'X11Forwarding': 'no'
