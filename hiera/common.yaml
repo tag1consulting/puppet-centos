@@ -99,6 +99,9 @@ apache::mod::deflate::types:
   - 'application/ecmascript'
   - 'application/rss+xml'
 
+#MPM Settings
+apache::mod::prefork::maxclients: '64'
+
 site_profile::web::vhosts:
   vagrant-test.tag1consulting.com:
     port: 80
@@ -208,6 +211,7 @@ mysql::server::override_options:
     innodb_log_buffer_size: '2M'
     innodb_log_files_in_group: '2'
     innodb_log_file_size: '100M'
+    innodb_file_per_table: '1'
     binlog_format: 'row'
     character-set-server: 'utf8'
     collation-server: 'utf8_general_ci'
@@ -239,3 +243,8 @@ site_profile::web_test::test_packages:
 # SELinux configuration.
 # Enable selinux by default.
 selinux::mode: 'enforcing'
+
+#################################################
+# Vhost Directory Settings
+apache::purge_vhost_dir: false
+apache::vhost_dir: '/etc/httpd/vhost.d'
