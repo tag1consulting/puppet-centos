@@ -248,3 +248,7 @@ selinux::mode: 'enforcing'
 # Vhost Directory Settings
 apache::purge_vhost_dir: false
 apache::vhost_dir: '/etc/httpd/vhost.d'
+
+#################################################
+#Redis
+redis::bind: '127.0.0.1'
