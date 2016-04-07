@@ -57,6 +57,7 @@ It's possible to run this setup on a remote Rackspace VM by using the vagrant-ra
 
 Note: Beware leaving the VM running or you may have a large Rackspace bill! You can ```vagrant destroy``` or manually delete it through the RS Cloud control panel.
 
+
 History
 -------
 [Tag1 Consulting](http://tag1consulting.com) created these scripts with support from [Webwise Solutions](http://webwiseone.com). The goal is to provide an example Puppet tree, utilizing Hiera and external modules as much as possible, to have a quick starting point for creating a larger Puppet tree, or for those looking to create easily customizable dev VMs.
