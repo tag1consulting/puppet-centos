@@ -16,6 +16,7 @@ mod 'puppetlabs/stdlib', '4.6.0'
 mod 'puppetlabs/vcsrepo', '1.3.0'
 mod 'saz/sudo', '3.1.0'
 mod 'saz/ssh', '2.8.1'
+mod 'tag1/yumrepos', '0.9.0'
 mod 'thias/php', '1.1.1'
 mod 'treydock/yum_cron', '1.2.0'
 mod 'torrancew/account', '0.0.5'
@@ -25,8 +26,3 @@ mod 'torrancew/account', '0.0.5'
 mod 'memcached',
   :git => 'git://github.com/jeffsheltren/puppet-memcached.git',
   :ref => 'no-policycoreutils'
-
-# Temporarily install from upstream repo until the mariadb 10 repo is merged into a release.
-mod 'yumrepos',
-  :git => 'git://github.com/tag1consulting/puppet-yumrepos.git',
-  :ref => 'master'

@@ -65,11 +65,11 @@ class site_profile::web {
   }
 
   # Install Drush.
-  class { 'yumrepos::drush6': }
+  class { 'yumrepos::drush8': }
 
   package { 'drush':
-    ensure  => installed,
-    require => Class['yumrepos::drush6'],
+    ensure  => latest,
+    require => Class['yumrepos::drush8'],
   }
 
   # Setup memcached.

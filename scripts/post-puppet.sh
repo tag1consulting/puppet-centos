@@ -1,7 +1,6 @@
 #!/bin/sh
 
-# Install Drush 8
-/vagrant/scripts/drush8.sh 2>&1 > /dev/null
+# This script will be run after Puppet on a Vagrant provision.
 
-# Ensure Drupal can write settings and files
-#chown -R apache /var/www/vagrant-multi1.tag1consulting.com/sites/default
+# Cleanup old drush install from vagrant home directory.
+/vagrant/scripts/drush8-cleanup.sh
