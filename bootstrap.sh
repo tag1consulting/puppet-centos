@@ -46,7 +46,7 @@ else
 fi
 
 # Run r10k to pull in external modules.
-cd /vagrant && r10k -v info puppetfile install
+cd /vagrant && /usr/local/bin/r10k -v info puppetfile install
 
 # The following is only required on Rackspace.
 # Rackspace Vagrant plugin seems to run puppet with /tmp module paths no matter what we configure.
