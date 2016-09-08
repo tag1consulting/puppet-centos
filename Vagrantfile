@@ -12,6 +12,14 @@ Vagrant.require_version ">= 1.6.2"
 # Load zlib so port forwarding works.
 require 'zlib'
 
+# We require puppet installed as a vagrant plugin for use with r10k.
+begin
+  gem "puppet"
+rescue Gem::LoadError
+  raise "Puppet must be installed as a vagrant plugin! Run 'vagrant plugin install puppet' to install."
+end
+
+
 project = File.basename(File.dirname(__FILE__));
 
 dirname = File.dirname(__FILE__)
@@ -35,6 +43,12 @@ if !defined? $domainname
 end
 
 Vagrant.configure('2') do |config|
+  # Configure Virtualbox guest additions auto-update, defaults to enabled.
+  if !defined? $vbguest_auto_update
+    $vbguest_auto_update = true
+  end
+  config.vbguest.auto_update = $vbguest_auto_update
+
   # Temporary workaround for https://github.com/mitchellh/vagrant/issues/7610 (9/1/16)
   config.ssh.insert_key = false
 
@@ -111,6 +125,10 @@ Vagrant.configure('2') do |config|
 
   # Install r10k using the shell provisioner and download the Puppet modules
   config.vm.provision "shell", path: 'bootstrap.sh'
+
+  # Run r10k before running puppet.
+  config.r10k.puppet_dir = "."
+  config.r10k.puppetfile_path = "Puppetfile"
 
   if !defined? $puppet_options
     $puppet_options = " --log_level warning"
