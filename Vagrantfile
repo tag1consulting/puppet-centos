@@ -24,11 +24,8 @@ project = File.basename(File.dirname(__FILE__));
 
 dirname = File.dirname(__FILE__)
 localfile = dirname + "/Vagrantfile.local"
-default = dirname + "/Vagrantfile.local.example"
 if File.exist?(localfile)
   load localfile
-elsif File.exists?(default)
-  load default
 end
 
 # Optional goodies like colorized output
