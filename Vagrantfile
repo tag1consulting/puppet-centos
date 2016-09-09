@@ -9,6 +9,9 @@ VAGRANTFILE_API_VERSION = "2"
 # Require 1.6.2 since that's when the rsync synced folder was stabilized.
 Vagrant.require_version ">= 1.6.2"
 
+# Update PATH to include Vagrant gems so that the r10k plugin can find puppet.
+ENV["PATH"] = ENV["PATH"] + ":~/.vagrant.d/gems/bin"
+
 # Load zlib so port forwarding works.
 require 'zlib'
 
