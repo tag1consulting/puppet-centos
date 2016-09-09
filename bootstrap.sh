@@ -3,7 +3,7 @@
 # bootstrap.sh: preps our environment for puppet.
 
 # Detect major version
-OSVER=`rpm -q --queryformat "%{VERSION}" centos-release`
+OSVER=$(rpm -q --queryformat "%{VERSION}" centos-release)
 echo "Bootstrapping CentOS $OSVER"
 
 # Need git for r10k
@@ -13,7 +13,7 @@ rpm -q --quiet git || { echo "git package not found, installing with yum"; yum -
 rpm -q --quiet rubygems || { echo "rubygems package not found, installing with yum"; yum -y -q install rubygems; }
 
 # Install Puppet repos. Note: EPEL is installed by default on Rackspace CentOS images.
-rpm -q --quiet puppetlabs-release || { echo "puppetlabs-release package not found, installing with rpm"; rpm -Uvh http://yum.puppetlabs.com/puppetlabs-release-el-${OSVER}.noarch.rpm; }
+rpm -q --quiet puppetlabs-release || { echo "puppetlabs-release package not found, installing with rpm"; rpm -U --quiet http://yum.puppetlabs.com/puppetlabs-release-el-${OSVER}.noarch.rpm; }
 
 # It helps to have puppet installed...
 rpm -q --quiet puppet || { echo "puppet package not found, installing with yum"; yum -y -q install puppet; }
