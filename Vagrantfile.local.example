@@ -14,8 +14,13 @@ $vms = {
   }
 
 # Box source
-$box = "tag1/centos7-50GB-vbguest"
-$box_url = "http://pkg.tag1consulting.com/vagrant-boxes/centos7-50GB-vbguest/metadata.json"
+$box = "centos/7"
+
+# Puppet options.  Set to an empty string to get a bit more verbose output from Puppet; default is to only output warning level and higher.
+#$puppet_options = ""
+
+# Uncomment the following to disable auto-update of VirtualBox Guest Additions.
+#$vbguest_auto_update = false
 
 # Provide list of source mounts. The type defaults to virtualbox, but you could
 # also use nfs (on Mac/Linux) or the rsync type.

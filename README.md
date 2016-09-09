@@ -38,6 +38,10 @@ Local install using VirtualBox
 ------------------------------
  * Install VirtualBox
  * Install Vagrant
+ * Install required Vagrant plugins:
+   * `vagrant plugin install vagrant-vbguest`
+   * `vagrant plugin install puppet`
+   * `vagrant plugin install vagrant-r10k`
  * Checkout this repo
  * Create a modules directory: ```mkdir modules```
  * If you want to adjust Vagrant/Virtualbox settings such as memory allocation, CPU allocation, or shared mounts, copy ```Vagrantfile.local.example``` to ```Vagrantfile.local``` and make your changes there.

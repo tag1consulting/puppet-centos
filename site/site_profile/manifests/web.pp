@@ -11,8 +11,9 @@ class site_profile::web {
   # Setup Apache base class, includes default vhost.
   class  { 'apache': }
   # Setup Vhosts.
+  $vhost_dir = hiera('apache::vhost_dir', '/etc/httpd/conf.d')
   $vhosts = hiera_hash('site_profile::web::vhosts', {})
-  create_resources('apache::vhost', $vhosts)
+  create_resources('apache::vhost', $vhosts, { require => File[$vhost_dir], })
 
   # PHP
   # Setup php.ini.
