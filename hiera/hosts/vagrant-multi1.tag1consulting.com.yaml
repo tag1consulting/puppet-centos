@@ -1,8 +1,12 @@
 # Default configuration for vagrant-multi1.tag1consulting.com
-#
+
+#############################################
+# Class definitions.
+classes:
+  - site_profile::phpxhprof
+
 #################################################
 # Apache configuration.
-
 site_profile::web::vhosts:
   vagrant-test.tag1consulting.com:
     default_vhost: false
@@ -52,3 +56,12 @@ mysql::server::grants:
 # SELinux configuration.
 # Disable selinux on Dev VM.
 selinux::mode: 'disabled'
+
+#################################################
+# PHP configuration.
+# Create a cron job to clean up temp xhprof output.
+site_profile::phpxhprof::xhprof_crons:
+  'xhprof temp file cleanup':
+    minute: 6
+    user: root
+    command: "find /tmp -mtime +7 -type f -name '*.xhprof' -delete || echo 'Error cleaning up xhprof files.'"
