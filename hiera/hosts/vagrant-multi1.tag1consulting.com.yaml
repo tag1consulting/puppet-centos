@@ -1,8 +1,12 @@
 # Default configuration for vagrant-multi1.tag1consulting.com
-#
+
+#############################################
+# Class definitions.
+classes:
+  - site_profile::phpxhprof
+
 #################################################
 # Apache configuration.
-
 site_profile::web::vhosts:
   vagrant-test.tag1consulting.com:
     default_vhost: false
