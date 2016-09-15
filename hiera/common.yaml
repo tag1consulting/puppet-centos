@@ -39,7 +39,6 @@ allow_virtual_packages: TRUE
 site_profile::base::base_packages:
   - bash-completion
   - dstat
-  - git
   - htop
   - iotop
   - lsof
@@ -49,6 +48,7 @@ site_profile::base::base_packages:
   - strace
   - tcpdump
   - telnet
+  - vim
   - yum-plugin-replace
 
 #############################################
