@@ -49,6 +49,18 @@ Vagrant.configure('2') do |config|
   end
   config.vbguest.auto_update = $vbguest_auto_update
 
+  # Configure additional aliases for the hostsupdater plugin.
+  # These can be defined in Vagrantfile.local
+  if Vagrant.has_plugin?("vagrant-triggers")
+    if !defined? $host_aliases
+      $host_aliases = [
+        "vagrant-multi1.tag1consulting.com",
+        "vagrant-xhgui.tag1consulting.com"
+        ]
+    end
+    config.hostsupdater.aliases = $host_aliases
+  end
+
   # Temporary workaround for https://github.com/mitchellh/vagrant/issues/7610 (9/1/16)
   config.ssh.insert_key = false
 
