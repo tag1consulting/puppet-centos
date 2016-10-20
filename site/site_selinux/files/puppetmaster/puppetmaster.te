@@ -1,0 +1,32 @@
+module puppetmaster 0.4;
+
+# SELinux module for running puppetmaster behind apache/passenger.
+
+require {
+  type puppet_etc_t;
+  type puppet_var_lib_t;
+  type puppet_log_t;
+  type puppet_port_t;
+  type httpd_t;
+  class capability { fowner sys_resource fsetid sys_ptrace };
+  class capability2 block_suspend;
+  class dir { setattr read create write rmdir remove_name add_name };
+  class file { rename setattr read create ioctl write getattr unlink open append };
+  class lnk_file { read getattr };
+  class udp_socket name_bind;
+  attribute port_type;
+  class tcp_socket name_connect;
+}
+
+#============= httpd_t ==============
+allow httpd_t puppet_etc_t:dir read;
+allow httpd_t puppet_etc_t:file { read getattr open ioctl };
+allow httpd_t puppet_etc_t:lnk_file { read getattr };
+allow httpd_t puppet_log_t:dir { write add_name };
+allow httpd_t puppet_log_t:file { write create open };
+allow httpd_t puppet_var_lib_t:dir { write rmdir setattr read remove_name create add_name };
+allow httpd_t puppet_var_lib_t:file { rename write setattr create unlink append };
+allow httpd_t self:capability sys_ptrace;
+allow httpd_t self:capability { fowner sys_resource fsetid };
+allow httpd_t self:capability2 block_suspend;
+allow httpd_t puppet_port_t:udp_socket name_bind;

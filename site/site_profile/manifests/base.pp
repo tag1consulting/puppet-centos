@@ -27,6 +27,9 @@ class site_profile::base {
   $user_accounts = hiera_hash('user_accounts', {} )
   create_resources('account', $user_accounts)
 
+  # SELinux configuration for all hosts.
+  class { 'site_selinux': }
+
   # Base Sudo setup.
   class { 'sudo': }
 

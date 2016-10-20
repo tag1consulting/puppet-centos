@@ -1,0 +1,15 @@
+module httpdsolr 0.0.2;
+
+require {
+  attribute port_type;
+  class tcp_socket name_connect;
+  type httpd_t;
+  type varnishd_t;
+}
+
+# Define a new port type for solr.
+type solr_port_t, port_type;
+
+# Allow Apache/PHP/Varnish to connect to solr ports.
+allow httpd_t solr_port_t:tcp_socket name_connect;
+allow varnishd_t solr_port_t:tcp_socket name_connect;

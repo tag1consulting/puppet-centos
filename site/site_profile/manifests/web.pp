@@ -8,6 +8,9 @@ class site_profile::web {
   $firewall_rules = hiera_hash('site_profile::web::firewall_rules', {})
   create_resources(hiera('firewall_provider', 'firewall'), $firewall_rules)
 
+  # SELinux configuration for Drupal sites.
+  class { 'site_selinux::drupal': }
+
   # Setup Apache base class, includes default vhost.
   class  { 'apache': }
   # Setup Vhosts.
