@@ -1,0 +1,14 @@
+module php-systemd 0.0.6;
+
+require {
+  type httpd_t;
+  attribute port_type;
+  class tcp_socket name_bind;
+  class tcp_socket name_connect;
+}
+
+# Define a new port type for php.
+type php_port_t, port_type;
+
+allow httpd_t php_port_t:tcp_socket name_bind;
+allow httpd_t php_port_t:tcp_socket name_connect;

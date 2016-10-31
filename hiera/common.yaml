@@ -5,7 +5,6 @@
 # Class definitions.
 classes:
  - site_profile::base
- - selinux
 
 #############################################
 # Global enable/disable flags.

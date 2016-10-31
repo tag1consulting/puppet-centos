@@ -54,8 +54,8 @@ mysql::server::grants:
 
 #################################################
 # SELinux configuration.
-# Disable selinux on Dev VM.
-selinux::mode: 'disabled'
+# Uncomment this to disable SELinux on the Dev VM.
+#selinux::mode: 'disabled'
 
 #################################################
 # PHP configuration.
