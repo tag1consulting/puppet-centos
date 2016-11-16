@@ -27,6 +27,11 @@ site_profile::web::vhosts:
           - FollowSymLinks
           - MultiViews
 
+# Create web-writable directories.
+site_profile::web::apache_writable_dirs:
+  - '/var/www/drupal_private_files'
+  - '/var/www/drupal_public_files'
+
 #################################################
 # MySQL configuration.
 #
@@ -56,6 +61,14 @@ mysql::server::grants:
 # SELinux configuration.
 # Uncomment this to disable SELinux on the Dev VM.
 #selinux::mode: 'disabled'
+
+site_selinux::drupal::drupal_file_paths:
+  'localdev-private-files':
+    pathname: '/var/www/drupal_private_files(/.*)?'
+    restorecond_path: '/var/www/drupal_private_files'
+  'localdev-public-files':
+    pathname: '/var/www/drupal_public_files(/.*)?'
+    restorecond_path: '/var/www/drupal_public_files'
 
 #################################################
 # PHP configuration.
