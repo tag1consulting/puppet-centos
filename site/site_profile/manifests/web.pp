@@ -18,6 +18,18 @@ class site_profile::web {
   $vhosts = hiera_hash('site_profile::web::vhosts', {})
   create_resources('apache::vhost', $vhosts, { require => File[$vhost_dir], })
 
+  # Create additional directories which need to be writable by apache/php.
+  # Note these same directories should also be included in
+  # site_selinux::drupal::drupal_file_paths to ensure they have correct selinux contexts.
+  $web_writable_dirs = hiera_array('site_profile::web::apache_writable_dirs', [])
+  file { $web_writable_dirs:
+    ensure  => directory,
+    owner   => 'apache',
+    group   => 'apache',
+    mode    => 0755,
+    require => Package['httpd'],
+  }
+
   # PHP
   # Setup php.ini.
   $php_ini = hiera_hash('site_profile::web::php_ini')
