@@ -4,7 +4,7 @@ forge 'forge.puppetlabs.com'
 # Install modules from the Forge
 mod 'arioch/redis', '1.2.3'
 mod 'crayfishx/firewalld', '2.2.0'
-mod 'puppet/selinux', '0.5.0'
+mod 'puppet/selinux', '0.8.0'
 mod 'puppetlabs/apache', '1.10.0'
 mod 'puppetlabs/concat', '2.2.0'
 mod 'puppetlabs/denyhosts', '0.1.0'

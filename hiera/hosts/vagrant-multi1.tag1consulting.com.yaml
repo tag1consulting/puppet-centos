@@ -62,6 +62,8 @@ mysql::server::grants:
 # Uncomment this to disable SELinux on the Dev VM.
 #selinux::mode: 'disabled'
 
+# Hash of paths (include valid regex as expected by selinux) to assign selinux contexts too.
+# Default context of 'httpd_sys_rw_content_t' (httpd-writable) is used unless overridden here.
 site_selinux::drupal::drupal_file_paths:
   'localdev-private-files':
     pathname: '/var/www/drupal_private_files(/.*)?'
@@ -69,6 +71,25 @@ site_selinux::drupal::drupal_file_paths:
   'localdev-public-files':
     pathname: '/var/www/drupal_public_files(/.*)?'
     restorecond_path: '/var/www/drupal_public_files'
+
+# Hash of SELinux booleans to set -- this list is an example of a Drupal Web Server.
+site_selinux::drupal::selbooleans:
+  'httpd_can_network_connect_db':
+    persistent: true
+    ensure: 'on'
+  'httpd_can_sendmail':
+    persistent: true
+    ensure: 'on'
+  'httpd_can_network_memcache':
+    persistent: true
+    ensure: 'on'
+
+# Hash of custom SELinux modules to install.
+site_selinux::drupal::selinux_modules:
+  'httpdsolr':
+    source: 'puppet:///modules/site_selinux/httpdsolr/httpdsolr.te'
+  'httpdvarnish':
+    source: 'puppet:///modules/site_selinux/httpdvarnish/httpdvarnish.te'
 
 #################################################
 # PHP configuration.

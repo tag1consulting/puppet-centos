@@ -3,23 +3,9 @@
 # Selinux contexts for Drupal sites.
 class site_selinux::drupal {
 
- # Allow DB connections.
-  selboolean { 'httpd_can_network_connect_db':
-    persistent => true,
-    value      => on,
-  }
-
-  # Allow use of sendmail.
-  selboolean { 'httpd_can_sendmail':
-    persistent => true,
-    value      => on,
-  }
-
-  # Allow memcache connections.
-  selboolean { 'httpd_can_network_memcache':
-    persistent => true,
-    value      => on,
-  }
+  # Set SELinux Booleans as specified in hiera.
+  $drupal_selbooleans = hiera_hash('site_selinux::drupal::selbooleans', {})
+  create_resources('selinux::boolean', $drupal_selbooleans)
 
   # Set default file contexts for httpd-writable Drupal directories (files/private_files).
   $drupal_file_paths = hiera_hash('site_selinux::drupal::drupal_file_paths', {})
@@ -30,16 +16,9 @@ class site_selinux::drupal {
   $httpd_readable_paths = hiera_hash('site_selinux::drupal::httpd_readable_paths', {})
   create_resources('selinux::fcontext', $httpd_readable_paths, { context => 'httpd_sys_content_t' })
 
-  # Custom httpdsolr selinux module:
-  # allow php/httpd/varnishd to access solr network ports.
-  selinux::module { 'httpdsolr':
-    source => 'puppet:///modules/site_selinux/httpdsolr/httpdsolr.te',
-  }
-
-  # Custom httpdvarnish selinux module: allow php/httpd to access varnish control ports.
-  selinux::module { 'httpdvarnish':
-    source => 'puppet:///modules/site_selinux/httpdvarnish/httpdvarnish.te',
-  }
+  # Install custom SELinux modules as defined in hiera.
+  $drupal_selinux_modules = hiera_hash('site_selinux::drupal::selinux_modules', {})
+  create_resources('selinux::module', $drupal_selinux_modules)
 
   # Use semanage to assign solr ports to the solr_port_t type
   # which is defined in the httpdsolr selinux module.
