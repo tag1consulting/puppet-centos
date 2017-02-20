@@ -14,7 +14,7 @@ class site_profile::dbclient {
                                        { 'value_type' => 'Boolean',
                                          'default_value' => true,
                                        })
-  if ($replace_mysql_with_mysql55)
+  if ($replace_mysql_with_mysql55) {
     exec { 'mysqlinstall':
       command => '/usr/bin/yum -y install mysql',
       unless  => '/bin/rpm -q --quiet mysql55',
@@ -32,7 +32,7 @@ class site_profile::dbclient {
     $mysql_client_require = [ ]
   }
 
-  $mysql_client_packages = lookup('site_profile::dbclient::mysql_client_packages'
+  $mysql_client_packages = lookup('site_profile::dbclient::mysql_client_packages',
                                   { 'value_type'    => 'Array',
                                     'merge'         => 'unique',
                                     'default_value' => [],

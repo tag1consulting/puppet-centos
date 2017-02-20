@@ -7,7 +7,7 @@ class site_profile::web {
   # Firewall configuration for web hosts.
   $firewall_rules = lookup('site_profile::web::firewall_rules',
                            { 'value_type'    => 'Hash',
-                             'merge'         => 'deep'
+                             'merge'         => 'deep',
                              'default_value' => {},
                            })
   $firewall_provider = lookup('firewall_provider', { 'value_type' => 'String', 'default_value' => 'firewall', })
@@ -22,7 +22,7 @@ class site_profile::web {
   $vhost_dir = lookup('apache::vhost_dir', { 'value_type' => 'String', 'default_value' => '/etc/httpd/conf.d', })
   $vhosts = lookup('site_profile::web::vhosts',
                    { 'value_type'    => 'Hash',
-                     'merge'         => 'deep'
+                     'merge'         => 'deep',
                      'default_value' => {},
                    })
   create_resources('apache::vhost', $vhosts, { require => File[$vhost_dir], })
@@ -45,11 +45,11 @@ class site_profile::web {
 
   # PHP
   # Setup php.ini.
-  $php_ini = lookup('site_profile::web::php_ini'
+  $php_ini = lookup('site_profile::web::php_ini',
                     { 'value_type'    => 'Hash',
-                      'merge'         => 'deep'
+                      'merge'         => 'deep',
                       'default_value' => {},
-                    }))
+                    })
   create_resources('php::ini', $php_ini)
 
   class { 'php::cli': }
@@ -83,7 +83,7 @@ class site_profile::web {
     /opcache/: {
       $opcache_settings = lookup('site_profile::web::php_opcache_ini',
                                  { 'value_type'    => 'Hash',
-                                   'merge'         => 'deep'
+                                   'merge'         => 'deep',
                                    'default_value' => {},
                                  })
       php::module::ini { 'opcache':
@@ -96,7 +96,7 @@ class site_profile::web {
     default: {
       $apc_settings = lookup('site_profile::web::php_apc_ini',
                                  { 'value_type'    => 'Hash',
-                                   'merge'         => 'deep'
+                                   'merge'         => 'deep',
                                    'default_value' => {},
                                  })
       php::module::ini { 'apc':
@@ -119,7 +119,7 @@ class site_profile::web {
     php::module { "$php_memcache_packagename": }
     $memcache_settings = lookup('site_profile::web::php_memcache_ini',
                                  { 'value_type'    => 'Hash',
-                                   'merge'         => 'deep'
+                                   'merge'         => 'deep',
                                    'default_value' => {},
                                  })
     php::module::ini { 'memcache':

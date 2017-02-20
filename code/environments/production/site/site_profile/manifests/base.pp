@@ -8,7 +8,7 @@ class site_profile::base {
   if ($enable_firewall) {
     $firewall_rules = lookup('site_profile::base::firewall_rules',
                              { 'value_type'    => 'Hash',
-                               'merge'         => 'deep'
+                               'merge'         => 'deep',
                                'default_value' => {},
                              })
     $firewall_provider = lookup('firewall_provider', { 'value_type' => 'String', 'default_value' => 'firewall', })
@@ -47,21 +47,5 @@ class site_profile::base {
 
   # sshd configuration.
   class { 'ssh::server': }
-
-  # Denyhosts.
-  if (lookup('enable_denyhosts', { 'value_type' => 'Boolean', 'default_value' => false, })
-    class { 'denyhosts': }
-  }
-
-  # Enable yum cron.
-  # If enabled, defaults to only check for updates, not update automatically.
-  if (lookup('enable_yum_cron', { 'value_type' => 'Boolean', 'default_value' => false, })
-    class { 'yum_cron': }
-  }
-  else {
-    package { 'yum-cron':
-      ensure => 'absent',
-    }
-  }
 
 }
