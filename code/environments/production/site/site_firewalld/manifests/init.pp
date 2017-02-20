@@ -4,7 +4,7 @@
 # the firewalld package and service are in place.
 
 class site_firewalld {
-  $enable_firewall = hiera('enable_firewall', TRUE)
+  $enable_firewall = lookup( { 'name' => 'enable_firewall', 'value_type' => 'Boolean', 'default_value' => true, })
   if ($enable_firewall) {
     require firewalld
   }

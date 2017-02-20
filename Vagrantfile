@@ -95,16 +95,6 @@ Vagrant.configure('2') do |config|
   end
 
 
-  # Optional share for yum packages so that they don't have be downloaded all the time
-  # when doing a clean build of different VMs.
-  # To turn this on, set vagrant_yum_cache in your Vagrantfile.local,
-  # $vagrant_yum_cache = "/var/cache/vagrantyum_cache"
-  if defined? $vagrant_yum_cache
-    config.vm.synced_folder $vagrant_yum_cache, "/var/cache/yum"
-    config.vm.provision "shell",
-      inline: "echo '--- Turning on yum caching in /etc/yum.conf ---'; perl -pi.bak -e 's/keepcache=0/keepcache=1/' /etc/yum.conf"
-  end
-
   # Mount any development directories
   if defined? $dev_mounts
     # Default mount settings.
@@ -127,8 +117,8 @@ Vagrant.configure('2') do |config|
   config.vm.provision "shell", path: 'bootstrap.sh'
 
   # Run r10k before running puppet.
-  config.r10k.puppet_dir = "."
-  config.r10k.puppetfile_path = "Puppetfile"
+  #config.r10k.puppet_dir = "code/environments/production"
+  #config.r10k.puppetfile_path = "Puppetfile"
 
   if !defined? $puppet_options
     $puppet_options = " --log_level warning"
@@ -136,11 +126,9 @@ Vagrant.configure('2') do |config|
 
   # Puppet provisioner for primary configuration
   config.vm.provision "puppet" do |puppet|
-    puppet.manifests_path = "manifests"
-    puppet.module_path = [ "modules", "site", "dist" ]
-    puppet.manifest_file  = "site.pp"
-    puppet.hiera_config_path = "hiera.yaml"
-    puppet.working_directory = "/vagrant"
+    puppet.environment = "production"
+    puppet.environment_path = "code/environments"
+    puppet.hiera_config_path = "code/environments/production/hiera.yaml"
     puppet.options = $puppet_options
 
     # In vagrant environment it can be hard for facter to get this stuff right
