@@ -117,8 +117,9 @@ Vagrant.configure('2') do |config|
   config.vm.provision "shell", path: 'bootstrap.sh'
 
   # Run r10k before running puppet.
-  #config.r10k.puppet_dir = "code/environments/production"
-  #config.r10k.puppetfile_path = "Puppetfile"
+  config.r10k.puppet_dir = "code/environments/production"
+  config.r10k.puppetfile_path = "Puppetfile"
+  config.r10k.module_path = "code/environments/production/modules"
 
   if !defined? $puppet_options
     $puppet_options = " --log_level warning"
