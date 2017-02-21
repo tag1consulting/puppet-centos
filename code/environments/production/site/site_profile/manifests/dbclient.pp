@@ -11,7 +11,7 @@
 # set 'site_profile::dbclient::replace_mysql_with_mysql55' to FALSE in Hiera.
 class site_profile::dbclient {
   $replace_mysql_with_mysql55 = lookup('site_profile::dbclient::replace_mysql_with_mysql55',
-                                       { 'value_type' => 'Boolean',
+                                       { 'value_type' => Boolean,
                                          'default_value' => true,
                                        })
   if ($replace_mysql_with_mysql55) {
@@ -33,7 +33,7 @@ class site_profile::dbclient {
   }
 
   $mysql_client_packages = lookup('site_profile::dbclient::mysql_client_packages',
-                                  { 'value_type'    => 'Array',
+                                  { 'value_type'    => Array,
                                     'merge'         => 'unique',
                                     'default_value' => [],
                                   })

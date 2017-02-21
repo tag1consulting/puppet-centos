@@ -18,7 +18,7 @@ class site_profile::db {
   class { 'yumrepos::percona': }
 
   $mysql_additional_pkgs = lookup('site_profile::db::mysql_additional_pkgs',
-                                  { 'value_type'    => 'Array',
+                                  { 'value_type'    => Array,
                                     'merge'         => 'unique',
                                     'default_value' => [],
                                   })
