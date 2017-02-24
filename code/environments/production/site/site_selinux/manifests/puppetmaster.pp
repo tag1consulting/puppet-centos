@@ -10,7 +10,11 @@ class site_selinux::puppetmaster {
 
   # Set default file contexts for local git clones used by puppet
   # e.g. infra_private and hiera_private which aren't stored directly in /etc/puppet
-  $puppet_etc_t_file_paths = hiera_hash('site_selinux::puppetmaster::puppet_etc_t_file_paths', {})
+  $puppet_etc_t_file_paths = lookup('site_selinux::puppetmaster::puppet_etc_t_file_paths',
+                                    { 'value_type'    => Hash,
+                                      'merge'         => 'deep',
+                                      'default_value' => {},
+                                    })
   create_resources('selinux::fcontext', $puppet_etc_t_file_paths, { context => 'puppet_etc_t' })
 
 }
