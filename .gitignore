@@ -1,7 +1,7 @@
 # Exclude puppet modules directory which is populated by r10k
-/modules/*
+code/environments/production/modules/*
 # Only keep one file tracked there so that the directory remains in git.
-!/modules/.keep
+!code/environments/production/modules/.keep
 
 # Don't track private hiera directory if present.
 hiera_private

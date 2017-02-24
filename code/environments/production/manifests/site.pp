@@ -11,7 +11,7 @@ $hostenv = regsubst($fqdn, '^([a-z]+)-([a-z]+)(\d)\.(.*)$', '\1')
 $hosttype = regsubst($fqdn, '^([a-z]+)-([a-z]+)(\d)\.(.*)$', '\2')
 
 # Classes are included via Hiera by looking at the 'classes' array.
-hiera_include('classes')
+lookup('classes', Array[String], 'unique').include
 
 filebucket { 'main': server => puppet }
 
@@ -19,7 +19,7 @@ filebucket { 'main': server => puppet }
 File {
   owner  => 'root',
   group  => 'root',
-  mode   => 0644,
+  mode   => '0644',
   backup => main
 }
 
@@ -27,7 +27,7 @@ Exec { path => '/usr/bin:/usr/sbin:/bin:/sbin' }
 
 # Set allow_virtual for newer Puppet versions.
 if (versioncmp($::puppetversion, '3.6.1') >= 0) {
-  $allow_virtual= hiera('allow_virtual_packages', TRUE)
+  $allow_virtual= lookup('allow_virtual_packages', { 'value_type' => Boolean, 'default_value' => true, })
   Package {
     allow_virtual => $allow_virtual,
   }
@@ -42,7 +42,7 @@ node default {
   class { 'yumrepos::ius': stage => 'pre' }
 
   # EL6 firewall config needs some extra pre/post logic.
-  $enable_firewall = hiera('enable_firewall', TRUE)
+  $enable_firewall = lookup('enable_firewall', { 'value_type' => Boolean, 'default_value' => true, })
   if($enable_firewall and $operatingsystemmajrelease == 6) {
     resources { 'firewall':
       purge => true

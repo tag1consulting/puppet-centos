@@ -17,7 +17,11 @@ class site_profile::db {
   # Install mysql related packages some of which come from Percona's repo.
   class { 'yumrepos::percona': }
 
-  $mysql_additional_pkgs = hiera_array('site_profile::db::mysql_additional_pkgs', [])
+  $mysql_additional_pkgs = lookup('site_profile::db::mysql_additional_pkgs',
+                                  { 'value_type'    => Array,
+                                    'merge'         => 'unique',
+                                    'default_value' => [],
+                                  })
   if ($mysql_additional_pkgs != []) {
     package { $mysql_additional_pkgs:
       ensure  => installed,

@@ -1,0 +1,32 @@
+---
+version: 5
+
+defaults:
+  datadir: hiera
+  data_hash: yaml_data
+
+# Hierarchy for our configuration.
+# Most specific definitions come first, ending with global defaults.
+:hierarchy:
+  - name: "Hosts"
+    path: "hosts/%{fqdn}.yaml"
+
+  - name: "Host Environments"
+    paths:
+      - "hostenv/%{hostenv}/%{hosttype}-osrelease-%{operatingsystemmajrelease}.yaml"
+      - "hostenv/%{hostenv}/%{hosttype}.yaml"
+      - "hostenv/%{hostenv}/common-osrelease-%{operatingsystemmajrelease}.yaml"
+      - "hostenv/%{hostenv}/common.yaml"
+
+  - name: "Host Types"
+    paths:
+      - "types/%{hosttype}-osrelease-%{operatingsystemmajrelease}.yaml"
+      - "types/%{hosttype}.yaml"
+
+  - name: "Virtualization"
+    path: "virtual/%{virtual}.yaml"
+
+  - name: "Common Defaults"
+    paths:
+      - "common-osrelease-%{operatingsystemmajrelease}.yaml"
+      - "common.yaml"
