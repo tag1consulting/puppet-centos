@@ -134,7 +134,7 @@ class site_profile::web {
 
   package { 'drush':
     ensure  => latest,
-    require => Class['yumrepos::drush8'],
+    require => [ Class['yumrepos::drush8'], Class['php::cli'], ],
   }
 
   # Setup memcached.
