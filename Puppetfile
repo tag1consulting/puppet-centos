@@ -3,7 +3,7 @@ forge 'forge.puppetlabs.com'
 
 # Install modules from the Forge
 mod 'arioch/redis', '1.2.4'
-mod 'crayfishx/firewalld', '3.1.8'
+mod 'crayfishx/firewalld', '3.3.1'
 mod 'puppet/selinux', '0.8.0'
 mod 'puppet/staging', '2.2.0'
 mod 'puppetlabs/apache', '1.11.0'
